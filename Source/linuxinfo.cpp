@@ -43,3 +43,20 @@ std::string LinuxInfo::getHostname()
     }
     return std::string();
 }
+
+std::string LinuxInfo::getSystemInfo()
+{
+   struct utsname buf1;
+   if(uname(&buf1)!=0)
+   {
+       return std::string();
+   }
+   json json_out;
+   json_out["systemname"] = buf1.sysname;
+   json_out["nodename"] = buf1.nodename;
+   json_out["version"] = buf1.version;
+   json_out["release"] = buf1.release;
+   json_out["version"] = buf1.version;
+   json_out["machine"] = buf1.machine;
+   return json_out.dump();
+}

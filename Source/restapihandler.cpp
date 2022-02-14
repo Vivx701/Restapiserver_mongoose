@@ -5,6 +5,7 @@ RestAPIHandler::RestAPIHandler()
 {
     m_responseMap["/meminfo"] = [this]() { return  m_sysinfo.getMemInfo();};
     m_responseMap["/hostname"] = [this]() { return  m_sysinfo.getHostname();};
+    m_responseMap["/systeminfo"] = [this]() { return  m_sysinfo.getSystemInfo();};
 }
 
 APIResponse RestAPIHandler::getRootResonse()
@@ -12,7 +13,14 @@ APIResponse RestAPIHandler::getRootResonse()
     APIResponse response;
     response.staus = 200;
     response.type = "Content-Type: text/html; charset=UTF-8\r\n";
-    response.content = "<html><body><h1>Welcome</h1></body></html>";
+    std::string html = "<html><body><h1>Avaiable Apis</h1><br/><ul>";
+
+    for ( const auto &keypair : m_responseMap ) {
+            html += "<li>"+keypair.first+"</li>";
+    }
+    html += "</ul>";
+    html +=  "</body></html>";
+    response.content = html;
     return response;
 }
 

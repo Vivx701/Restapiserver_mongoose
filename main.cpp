@@ -35,10 +35,10 @@ int main()
     mg_log_set("2");
     mg_mgr_init(&mgr);
     mg_http_listen(&mgr, htp_address.c_str(), http_callback, NULL);
+    std::cout<<" Running..... Press Ctrl+C to exit" <<std::endl;
     do
     {
         mg_mgr_poll(&mgr, 1000);
-        std::cout<<"polling"<<std::endl;
     }while(running);
     mg_mgr_free(&mgr);
     return 0;
